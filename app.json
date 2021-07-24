@@ -6,7 +6,7 @@
       "size": "free"
     }
   },
-  "stack": "container",
+  "stack": "heroku-20",
   "env": {
     "url": {},
     "git-url": {},
