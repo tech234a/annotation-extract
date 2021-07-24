@@ -26,7 +26,7 @@ urlsl = set()
 
 # https://stackoverflow.com/a/19587581
 for file in tar:
-    if file:
+    if file and tar.extractfile(file):
         urls = ET.parse(tar.extractfile(file).read()).getroot().findall('.//url')
         for tag in urls:
             urlint = tag.attrib['value']
