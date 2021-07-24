@@ -7,10 +7,10 @@
     }
   },
   "stack": "container",
-  "env": [
+  "env": {
     "url": {},
     "git-url": {},
     "heroku-key": {},
     "heroku-app": {}
-  ]
+  }
 }
