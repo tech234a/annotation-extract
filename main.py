@@ -20,7 +20,7 @@ system("tar -x -f "+ url.split("/")[-1] + "data")
 vidsl = set()
 urlsl = set()
 
-# https://stackoverflow.com/a/19587581/
+# https://stackoverflow.com/a/19587581
 for subdir, dirs, files in walk("data"):
     for file in files:
         urls = ET.parse(join(subdir, file)).getroot().findall('.//url')
