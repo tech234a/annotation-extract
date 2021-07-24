@@ -45,5 +45,5 @@ for item in vidsl:
     vidf.write(item+"\n")
 vidf.close()
 
-system("cd repo; git commit -m \"Add "+item+"\"; git push")
+system("cd repo; git add .; git commit -m \"Add "+item+"\"; git push")
 heroku3.from_key(environ['heroku-key']).apps()[environ['heroku-app']].scale_formation_process('worker', 0)
