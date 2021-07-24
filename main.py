@@ -5,6 +5,7 @@ print("Initializing...")
 from os import system, environ, walk
 from os.path import join
 import heroku3
+import tarfile
 from urllib.request import urlretrieve
 import xml.etree.ElementTree as ET
 
@@ -18,15 +19,15 @@ print("Downloading tar file (this may take a while)...")
 urlretrieve(url, url.split("/")[-1])
 
 print("Extracting tar file...")
-system("tar -x -f "+ url.split("/")[-1] + "data")
+tar = tarfile.open(url.split("/")[-1])
 
 vidsl = set()
 urlsl = set()
 
 # https://stackoverflow.com/a/19587581
-for subdir, dirs, files in walk("data"):
-    for file in files:
-        urls = ET.parse(join(subdir, file)).getroot().findall('.//url')
+for file in tar:
+    if 1:
+        urls = ET.parse(tar.extractfile(file).read()).getroot().findall('.//url')
         for tag in urls:
             urlint = tag.attrib['value']
             if urlint.startswith("https://www.youtube.com/watch?"):
