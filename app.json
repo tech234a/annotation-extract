@@ -1,0 +1,16 @@
+{
+  "name": "annotation-extract",
+  "formation": {
+    "worker": {
+      "quantity": 1,
+      "size": "free"
+    }
+  },
+  "stack": "container",
+  "env": [
+    "url": {},
+    "git-url": {},
+    "heroku-key": {},
+    "heroku-app": {}
+  ]
+}
