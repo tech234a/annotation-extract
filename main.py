@@ -8,6 +8,9 @@ import heroku3
 from urllib.request import urlretrieve
 import xml.etree.ElementTree as ET
 
+system("git config --global user.name \"annotation-extract-bot\"")
+system("git config --global user.email annotation-extract-bot@annotation-extract-bot.local")
+
 url = environ["url"] # ex https://archive.org/download/youtubeannotations_00/A-.tar
 item = environ["url"].split("/")[-1].split(".")[0]
 
