@@ -7,6 +7,8 @@ import heroku3, tarfile
 from urllib.request import urlretrieve
 import xml.etree.ElementTree as ET
 from time import sleep
+import urllib.parse
+from urllib.parse import parse_qs
 
 #From https://github.com/iv-org/invidious/blob/ea0d52c0b85c0207c1766e1dc5d1bd0778485cad/src/invidious.cr#L79
 CHARS_SAFE = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_"
@@ -27,6 +29,7 @@ tar = tarfile.open(url.split("/")[-1])
 vidsl = set()
 urlsl = set()
 yturl = set()
+error = set()
 
 # https://stackoverflow.com/a/19587581
 for file in tar:
@@ -37,14 +40,17 @@ for file in tar:
                 urls = ET.parse(myfi).getroot().findall('.//url')
                 for tag in urls:
                     urlint = tag.attrib['value']
-                    if urlint.startswith("https://www.youtube.com/watch?"):
-                        vidsl.add(urlint.split("v=")[-1].split("&")[0].split("#")[0])
-                    elif urlint.startswith("https://www.youtube.com/"):
-                        yturl.add(urlint.removeprefix("https://www.youtube.com/"))
+                    if urlint.startswith("https://www.youtube.com/watch?") or urlint.startswith("http://www.youtube.com/watch?"):
+                        vidsl.add(parse_qs(urllib.parse.urlparse(urlint).query)["v"])
+                    elif urlint.startswith("https://www.youtube.com/") or urlint.startswith("http://www.youtube.com/"):
+                        yturl.add(urlint.removeprefix("https://www.youtube.com/").removeprefix("http://www.youtube.com/"))
+                    elif urlint.startswith("/redirect?"):
+                        urlsl.add(parse_qs(urllib.parse.urlparse(urlint).query)["q"])
                     else:
                         urlsl.add(urlint)
             except:
                 print("error", file)
+                error.add(file.name)
 
 system("git clone "+environ["git-url"]+" repo")
 urlf = open("repo/"+itema+"_urls.txt", "w")
@@ -61,6 +67,11 @@ yturlf = open("repo/"+itema+"_yturls.txt", "w")
 for item in yturl:
     yturlf.write(item+"\n")
 yturlf.close()
+
+errorf = open("repo/errors.txt", "a")
+for item in error:
+    errorf.write(item+"\n")
+errorf.close()
 
 system("cd repo; git add .; git commit -m \"Add "+itema+"\"; git push")
 
