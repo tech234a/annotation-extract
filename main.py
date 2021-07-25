@@ -27,7 +27,7 @@ urlsl = set()
 # https://stackoverflow.com/a/19587581
 for file in tar:
     if file and tar.extractfile(file):
-        urls = ET.parse(tar.extractfile(file).read()).getroot().findall('.//url')
+        urls = ET.fromstring(tar.extractfile(file).read()).getroot().findall('.//url')
         for tag in urls:
             urlint = tag.attrib['value']
             if urlint.startswith("https://www.youtube.com/watch?"):
