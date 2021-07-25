@@ -57,7 +57,7 @@ applist = heroku3.from_key(environ['heroku-key']).apps(order_by="name")
 currentlists = []
 for app in applist:
     if app.name.startswith("annotation"):
-        currentlists.append(int(app.config()["url"].split("/")[-1].split(".")[0]))
+        currentlists.append(app.config()["url"].split("/")[-1].split(".")[0])
         
 desl = "A"
 for item in currentlists:
