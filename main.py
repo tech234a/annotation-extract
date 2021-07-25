@@ -32,13 +32,16 @@ for file in tar:
     if file:
         myfi = tar.extractfile(file)
         if myfi:
-            urls = ET.parse(myfi).getroot().findall('.//url')
-            for tag in urls:
-                urlint = tag.attrib['value']
-                if urlint.startswith("https://www.youtube.com/watch?"):
-                    vidsl.add(urlint.split("v=")[-1].split("&")[0])
-                else:
-                    urlsl.add(urlint.removeprefix("https://www.youtube.com/"))
+            try:
+                urls = ET.parse(myfi).getroot().findall('.//url')
+                for tag in urls:
+                    urlint = tag.attrib['value']
+                    if urlint.startswith("https://www.youtube.com/watch?"):
+                        vidsl.add(urlint.split("v=")[-1].split("&")[0])
+                    else:
+                        urlsl.add(urlint.removeprefix("https://www.youtube.com/"))
+            except:
+                print("error", file)
 
 system("git clone "+environ["git-url"]+" repo")
 urlf = open("repo/"+item+"_urls.txt", "w")
