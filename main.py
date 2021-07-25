@@ -45,7 +45,7 @@ for file in tar:
                     elif urlint.startswith("https://www.youtube.com/") or urlint.startswith("http://www.youtube.com/"):
                         yturl.add(urlint.removeprefix("https://www.youtube.com/").removeprefix("http://www.youtube.com/"))
                     elif urlint.startswith("/redirect?"):
-                        urlsl.add(parse_qs(urllib.parse.urlparse(urlint).query)["q"])
+                        urlsl.add(dict(parse_qs(urllib.parse.urlparse(urlint).query))["q"])
                     else:
                         urlsl.add(urlint)
             except:
