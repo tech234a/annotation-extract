@@ -83,7 +83,7 @@ for item in currentlists:
 if CHARS_SAFE.index(deslb) > 63:
     desl = CHARS_SAFE[CHARS_SAFE.index(desl) + 1]
 
-if CHARS_SAFE.index(desl) >= 63 and CHARS_SAFE.index(deslb) > 63:
+if CHARS_SAFE.index(desl) <= 63 and CHARS_SAFE.index(deslb) < 63:
     heroku3.from_key(environ['heroku-key']).apps()[environ['heroku-app']].scale_formation_process('worker', 0)
 else:
     heroku3.from_key(environ['heroku-key']).apps()[environ['heroku-app']].config()["url"] = "https://archive.org/download/youtubeannotations_"+str(CHARS_SAFE.index(desl)).zfill(2)+"/"+desl+deslb+".tar"
