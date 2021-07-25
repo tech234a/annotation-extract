@@ -74,7 +74,7 @@ todoitems = ['--', '-0', '-1', '-2', '-3', '-4', '-5', '-6', '-7', '-8', '-9', '
 
 desindex = 0
 for item in currentlists:
-    if todoitems.index(item) > desindex:
+    if todoitems.index(item) >= desindex:
         desindex = todoitems.index(item) + 1
 
 if desindex >= 4096:
