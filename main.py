@@ -26,6 +26,7 @@ tar = tarfile.open(url.split("/")[-1])
 
 vidsl = set()
 urlsl = set()
+yturl = set()
 
 # https://stackoverflow.com/a/19587581
 for file in tar:
@@ -37,9 +38,11 @@ for file in tar:
                 for tag in urls:
                     urlint = tag.attrib['value']
                     if urlint.startswith("https://www.youtube.com/watch?"):
-                        vidsl.add(urlint.split("v=")[-1].split("&")[0])
+                        vidsl.add(urlint.split("v=")[-1].split("&")[0].split("#")[0])
+                    elif urlint.startswith("https://www.youtube.com/"):
+                        yturl.add(urlint.removeprefix("https://www.youtube.com/"))
                     else:
-                        urlsl.add(urlint.removeprefix("https://www.youtube.com/"))
+                        urlsl.add(urlint)
             except:
                 print("error", file)
 
@@ -54,7 +57,12 @@ for item in vidsl:
     vidf.write(item+"\n")
 vidf.close()
 
-system("cd repo; git add .; git commit -m \"Add "+item+"\"; git push")
+yturlf = open("repo/"+itema+"_yturls.txt", "w")
+for item in yturl:
+    yturlf.write(item+"\n")
+yturlf.close()
+
+system("cd repo; git add .; git commit -m \"Add "+itema+"\"; git push")
 
 applist = heroku3.from_key(environ['heroku-key']).apps(order_by="name")
 currentlists = []
