@@ -16,7 +16,7 @@ system("git config --global user.email annotation-extract-bot@annotation-extract
 
 url = environ["url"] # ex https://archive.org/download/youtubeannotations_00/A-.tar
 print(url)
-item = environ["url"].split("/")[-1].split(".")[0]
+itema = environ["url"].split("/")[-1].split(".")[0]
 
 print("Downloading tar file (this may take a while)...")
 urlretrieve(url, url.split("/")[-1])
@@ -44,12 +44,12 @@ for file in tar:
                 print("error", file)
 
 system("git clone "+environ["git-url"]+" repo")
-urlf = open("repo/"+item+"_urls.txt", "w")
+urlf = open("repo/"+itema+"_urls.txt", "w")
 for item in urlsl:
     urlf.write(item+"\n")
 urlf.close()
 
-vidf = open("repo/"+item+"_vids.txt", "w")
+vidf = open("repo/"+itema+"_vids.txt", "w")
 for item in vidsl:
     vidf.write(item+"\n")
 vidf.close()
