@@ -41,7 +41,7 @@ for file in tar:
                 for tag in urls:
                     urlint = tag.attrib['value']
                     if urlint.startswith("https://www.youtube.com/watch?") or urlint.startswith("http://www.youtube.com/watch?"):
-                        vidsl.add(urlint.split("v=")[-1].split("&")[0].split("#")[0])
+                        vidsl.add(dict(parse_qs(urllib.parse.urlparse(urlint).query))["v"][0])
                     elif urlint.startswith("https://www.youtube.com/") or urlint.startswith("http://www.youtube.com/"):
                         yturl.add(urlint.removeprefix("https://www.youtube.com/").removeprefix("http://www.youtube.com/"))
                     elif urlint.startswith("/redirect?"):
