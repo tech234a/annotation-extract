@@ -53,6 +53,7 @@ for file in tar:
                 error.add(file.name)
 
 system("git clone "+environ["git-url"]+" repo")
+system("cd repo; git pull; cd ..")
 urlf = open("repo/"+itema+"_urls.txt", "w")
 for item in urlsl:
     urlf.write(item+"\n")
