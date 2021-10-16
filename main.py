@@ -93,7 +93,7 @@ for item in currentlists:
     if todoitems.index(item) >= desindex:
         desindex = todoitems.index(item) + 1
 
-if desindex >= 4096:
+if desindex >= len(todoitems):
     heroku3.from_key(environ['heroku-key']).apps()[environ['heroku-app']].scale_formation_process('worker', 0)
 else:
     heroku3.from_key(environ['heroku-key']).apps()[environ['heroku-app']].config()["url"] = "https://archive.org/download/youtubeannotations_"+str(CHARS_SAFE.index(todoitems[desindex][0])).zfill(2)+"/"+todoitems[desindex]+".tar"
